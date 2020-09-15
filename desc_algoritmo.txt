@@ -1,0 +1,45 @@
+Identificación de patrones no obvios a partir de técnicas de data mining
+
+Clustering medinate embedding
+
+Considerando un conjunto de secuencias S codificadas para un tipo de secuencia T (donde T es clasificado en base a la actividad a función, por ejemplo, Antibacterianos, etc) ejecutar los siguientes pasos.
+
+1. A partir de las secuencias codificadas, representadas como vectores, estimar la distancia (manhattan, coseno, mahalonovis, cualquiera menos euclidiana) entre los vectores y almacenar el valor.
+
+2. Dada la lista de distancias A,B generar un histograma y obtener los outliers positivos y negativos con el método de cuartiles.
+
+3. A partir de los umbrales obtenidos, considerar sólo aquellos puntos que presenten una distancia menor o igual al umbral mínimo.
+
+4. Formar un grafo con nodos como IDs de secuencias y sus aristas dependen del valor de distancia, emplear el umbral identificado y la matriz de distancia estimadas.
+
+5. A la estructura de grafo generada, aplicar algoritmo louvein para identificación de comunidades y estimar la modularidad de las divisiones.
+
+6. Asignar clasificaciones a las secuencias con respecto al subgrupo al que pertenece.
+
+La idea es hacer este tipo de división con las codificaciones mediante embedding que se brindan.
+
+Clustering mediante representaciones de espectros de frecuencia
+
+La idea es similar al punto anterior.Sin embargo, se planea el uso de propiedades fisicoquímicas digitalizadas, para poder obtener series de tiempo. Además, se requiere de una función diferente para estimar la distancia, en esta función se hace lo siguiente:
+
+distance = 0
+for i in range(len(points)-1):
+
+	value = points[i+1] - points[i]
+	distance+=value
+
+Esto simula de manera muy simple una derivada de orden n. Si solo consideramos 3 iteraciones, implica una derivada de radio, plano y espacio. De esta forma la función quedaría de este estilo:
+
+distance = 0
+
+orden=3
+index=1
+
+for i in range(orden):
+	
+	value = points[index]-points[index-1]
+	distance+=value
+	index+=1
+
+donde points es el arreglo de puntos en la frecuencia o señal.
+
